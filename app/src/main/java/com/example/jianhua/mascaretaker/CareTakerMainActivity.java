@@ -1,0 +1,13 @@
+package com.example.jianhua.mascaretaker;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+public class CareTakerMainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_care_taker_main);
+    }
+}

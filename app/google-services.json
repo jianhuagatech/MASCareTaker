@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "753440143583",
+    "firebase_url": "https://mascaretaker.firebaseio.com",
+    "project_id": "mascaretaker",
+    "storage_bucket": "mascaretaker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753440143583:android:de8af38a44554453",
+        "android_client_info": {
+          "package_name": "com.example.jianhua.mascaretaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753440143583-9h9th5utqkmt63k2hrhg393f4aldttc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jianhua.mascaretaker",
+            "certificate_hash": "431eeac19f6353912aa23c433d9bedd1cdfeb89a"
+          }
+        },
+        {
+          "client_id": "753440143583-0jrn3v9t89l7pvjt82ae9uaj0rvu0378.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMM41mgznPNltOYdNXZRMOe1h8UlMN-7k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753440143583-0jrn3v9t89l7pvjt82ae9uaj0rvu0378.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
