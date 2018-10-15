@@ -22,6 +22,14 @@ public class CareTakerMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_care_taker_main);
 
+        Button mMangeSeniorsButton = (Button) findViewById(R.id.manage_associate_account_button);
+        mMangeSeniorsButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO
+            }
+        });
+
         Button mCreateAssociateAcountButton = (Button)findViewById(R.id.create_associate_account_button);
         mCreateAssociateAcountButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -31,5 +39,7 @@ public class CareTakerMainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 }
