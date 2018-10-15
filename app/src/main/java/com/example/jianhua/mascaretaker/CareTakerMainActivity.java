@@ -27,6 +27,9 @@ public class CareTakerMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO
+                Intent careTakerAfterLoginIntent = new Intent(CareTakerMainActivity.this, CareTakerAfterLogin.class);
+                startActivity(careTakerAfterLoginIntent);
+                //setContentView(R.layout.activity_care_taker_after_login);
             }
         });
 

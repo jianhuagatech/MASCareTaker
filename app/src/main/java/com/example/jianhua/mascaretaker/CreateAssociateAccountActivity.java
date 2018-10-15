@@ -105,6 +105,16 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
                                 Toast.makeText(CreateAssociateAccountActivity.this, "Authentication succeeded.",
                                         Toast.LENGTH_SHORT).show();
                                 // TODO: SHOW NEXT PAGE
+
+
+                                Intent careTakerAfterLoginIntent = new Intent(CreateAssociateAccountActivity.this, CareTakerAfterLogin.class);
+                                startActivity(careTakerAfterLoginIntent);
+
+
+
+
+
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createAssociateUser:failure", task.getException());
