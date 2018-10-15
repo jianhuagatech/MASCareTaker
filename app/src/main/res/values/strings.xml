@@ -16,4 +16,7 @@
     </string>
     <string name="title_activity_senior_login">Sign in</string>
     <string name="title_activity_item_list">ItemListActivity</string>
+    <string name="october_15_2018">October 15, 2018</string>
+    <string name="enter_food_here">Enter food here</string>
+    <string name="add_new_record">Add New Record</string>
 </resources>

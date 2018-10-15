@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DailyRecordActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/october_15_2018"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@android:id/list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="0dp"
+        android:layout_height="344dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="74dp"
+        app:layout_constraintBottom_toTopOf="@+id/addNewRecordButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addNewRecordButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@android:id/list">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/textEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_food_here"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/addNewRecordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="63dp"
+        android:onClick="onClickBtn"
+        android:text="@string/add_new_record"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@android:id/list" />
+
+</android.support.constraint.ConstraintLayout>

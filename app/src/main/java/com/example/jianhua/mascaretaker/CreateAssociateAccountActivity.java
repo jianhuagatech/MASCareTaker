@@ -57,6 +57,10 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
 //                String age = mAgeView.getText().toString();
 //                String username = mUsernameView.getText().toString();
                 registerAssociateUser();
+
+                // TODO: Delete (for demo, just switch to daily record activity)
+                Intent myIntent = new Intent(getApplicationContext(), DailyRecordActivity.class);
+                startActivity(myIntent);
             }
         });
     }
