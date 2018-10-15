@@ -31,8 +31,10 @@ public class CareTakerAfterLogin extends AppCompatActivity {
                 // TODO
                 Intent careTakerAfterLoginIntent = new Intent(CareTakerAfterLogin.this, CreateAssociateAccountActivity.class);
                 startActivity(careTakerAfterLoginIntent);
-                //setContentView(R.layout.activity_care_taker_after_login);
+
             }
+
+
         });
 
     }
