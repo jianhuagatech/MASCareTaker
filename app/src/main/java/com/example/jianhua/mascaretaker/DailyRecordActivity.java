@@ -4,11 +4,20 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,11 +32,21 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 // https://www.dev2qa.com/android-listactivity-example/
 public class DailyRecordActivity extends ListActivity {
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    List<String> listData = new ArrayList<String>();
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("foodUsers");
+    String username = "";
+    ArrayAdapter<String> listDataAdapter = null;
+    Map<String, Object> map = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +54,42 @@ public class DailyRecordActivity extends ListActivity {
         setContentView(R.layout.activity_daily_record);
 
         // Create a list data which will be displayed in inner ListView.
-        List<String> listData = new ArrayList<String>();
+//        listData.add("Yogurt");
+//        listData.add("1 cup sugar, 2 pieces of bread");
+//        listData.add("Tomato soup");
 
-        // just add query name!
-        listData.add("Apple");
-        listData.add("Orange");
-        listData.add("Yogurt");
-        listData.add("1 cup sugar, 2 pieces of bread");
-        listData.add("Chicken sandwich");
-        listData.add("Tomato soup");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        username = currentUser.getEmail().split("@")[0];
 
-        // Create the ArrayAdapter use the item row layout and the list data.
-        ArrayAdapter<String> listDataAdapter = new ArrayAdapter<String>(this, R.layout.activity_daily_record_row, R.id.listRowTextView, listData);
+        Food addedFood = new Food("Potato", 80);
+        writeFood(addedFood);
 
+        listDataAdapter = new ArrayAdapter<String>(this, R.layout.activity_daily_record_row, R.id.listRowTextView, listData);
         // Set this adapter to inner ListView object.
         this.setListAdapter(listDataAdapter);
 
+        myRef.child(username).addValueEventListener(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                map = (Map<String, Object>) dataSnapshot.getValue();
+                listData.clear();
+                for(String foodQuery : new ArrayList<String>(map.keySet())) {
+                    listData.add(foodQuery);
+                }
+                listDataAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
+
+    }
+
+    public void writeFood(Food food) {
+        myRef.child(username).child(food.query).child("query").setValue(food.query);
+        myRef.child(username).child(food.query).child("calories").setValue(food.calories);
     }
 
     // When user click list item, this method will be invoked.
@@ -66,7 +103,8 @@ public class DailyRecordActivity extends ListActivity {
 
         // Create an AlertDialog to show.
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setMessage(itemText);
+        String message = map.get(itemText).toString();
+        alertDialog.setMessage(message);
         alertDialog.show();
     }
 
@@ -83,6 +121,7 @@ public class DailyRecordActivity extends ListActivity {
             //query = "1 cup sugar, 2 cups lettuce";
             Food newFood = addNewRecord(query);
             // add to firebase storage
+            writeFood(newFood);
         }
     }
 
@@ -135,12 +174,12 @@ public class DailyRecordActivity extends ListActivity {
             // food= query + calories
             Food newFood = new Food(query, totalCalories);
 
-            String message = String.format("Added %s to firebase storage. Meal contains %s calories.",
-                    query, Integer.toString(totalCalories));
-
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setMessage(message);
-            alertDialog.show();
+//            String message = String.format("Added %s to firebase storage. Meal contains %s calories.",
+//                    query, Integer.toString(totalCalories));
+//
+//            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+//            alertDialog.setMessage(message);
+//            alertDialog.show();
 
             return newFood;
 

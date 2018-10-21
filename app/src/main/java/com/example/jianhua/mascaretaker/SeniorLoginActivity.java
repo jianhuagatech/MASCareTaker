@@ -190,8 +190,8 @@ public class SeniorLoginActivity extends AppCompatActivity implements LoaderCall
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 //updateUI(user);
-                                Intent registerIntent = new Intent(SeniorLoginActivity.this, ItemListActivity.class);
-                                startActivity(registerIntent);
+                                Intent myIntent = new Intent(getApplicationContext(), DailyRecordActivity.class);
+                                startActivity(myIntent);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
