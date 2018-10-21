@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,6 +13,7 @@
     tools:context=".SeniorLoginActivity">
 
     <!-- Login progress -->
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -23,7 +25,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -33,16 +35,20 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -54,13 +60,16 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
                     android:hint="@string/prompt_password"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -69,10 +78,23 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_corner_bg1"
+                android:fontFamily="monospace"
                 android:text="Login"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
                 android:textStyle="bold" />
+
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_marginTop="30dp"
+        android:layout_width="198dp"
+        android:layout_height="144dp"
+        app:srcCompat="@drawable/elderlypeople" android:contentDescription="TODO"/>
 </LinearLayout>
