@@ -16,10 +16,37 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 /**
  * Created by Chai on 2018/10/14.
  */
+class Associate {
+
+    public String username;
+    public String email;
+    public String usertype;
+    public String masterAccountName;
+    public ArrayList<String> foodlist = new ArrayList<>();
+
+
+    public Associate() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
+    public Associate( String email, String usertype, String masterAccountName, ArrayList<String> foodlist) {
+        this.email = email;
+        this.usertype = usertype;
+        this.masterAccountName = masterAccountName;
+        this.foodlist = foodlist;
+
+    }
+    public String getName() {
+        return this.email;
+    }
+}
 
 public class CreateAssociateAccountActivity extends AppCompatActivity {
 
@@ -32,11 +59,14 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
     private static final String TAG = "CreateAssociateAccount";
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_associate_account);
+
 
         mAuth = FirebaseAuth.getInstance();
         // TODO: forget about the UI
@@ -46,6 +76,7 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
 //        mUsernameView = (EditText) findViewById(R.id.associate_username);
         mEmailView = (EditText) findViewById(R.id.associate_email);
         mPasswordView = (EditText) findViewById(R.id.associate_password);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Button mCreateButton = (Button) findViewById(R.id.create_button);
         mCreateButton.setOnClickListener(new View.OnClickListener() {
@@ -58,17 +89,54 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
 //                String username = mUsernameView.getText().toString();
                 registerAssociateUser();
 
+
                 // TODO: Delete (for demo, just switch to daily record activity)
-                Intent myIntent = new Intent(getApplicationContext(), DailyRecordActivity.class);
-                startActivity(myIntent);
+                //get the master email
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    //The key argument here must match that used in the other activity
+                    String masteraccount = extras.getString("masterAccount");
+                    Log.d("create-ac-to-careafter",masteraccount);
+
+                    Intent myIntent = new Intent(CreateAssociateAccountActivity.this, CareTakerAfterLogin.class);
+                    myIntent.putExtra("masterAccount", masteraccount);
+                    startActivity(myIntent);
+
+                }
             }
         });
     }
 
     private void registerAssociateUser() {
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
+        //Todo : move this part inside them Auth.createUserWithEmailAndPassword(email, password)
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            //The key argument here must match that used in the other activity
+            String masteraccount = extras.getString("masterAccount");
+            String temp_usr_id = extras.getString("userId");
+            if(temp_usr_id == null || temp_usr_id.length() == 0)
+                temp_usr_id = "0";
+
+            Log.d("what's wrong", temp_usr_id);
+            int int_userid = Integer.parseInt(temp_usr_id);
+
+            Log.d("create-associate-ac", masteraccount);
+
+            writeAssociate(email, "associate", masteraccount, new ArrayList<String>());
+
+
+            Intent careTakerAfterLoginIntent = new Intent(CreateAssociateAccountActivity.this, CareTakerAfterLogin.class);
+            Bundle extras1 = new Bundle();
+            extras1.putString("masterAccount", masteraccount);
+            extras1.putString("userId", String.valueOf(int_userid));
+            careTakerAfterLoginIntent.putExtras(extras1);
+            Log.d("create-associate-ac!!", masteraccount);
+            startActivity(careTakerAfterLoginIntent);
+        }
+        //////////
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -108,14 +176,10 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
                                 Log.d(TAG, "createAssociateUser:success");
                                 Toast.makeText(CreateAssociateAccountActivity.this, "Authentication succeeded.",
                                         Toast.LENGTH_SHORT).show();
-                                // TODO: SHOW NEXT PAGE
+                                // TODO: THE AUTHENTICATION HAS SOMETHING WORNG HERE! Firebase cannot store the AUTHENTICATION data
+                                //store to the database
 
-
-                                Intent careTakerAfterLoginIntent = new Intent(CreateAssociateAccountActivity.this, CareTakerAfterLogin.class);
-                                startActivity(careTakerAfterLoginIntent);
-
-
-
+                                //get the master email
 
 
 
@@ -141,6 +205,12 @@ public class CreateAssociateAccountActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() >= 6;
+    }
+
+    private void writeAssociate(String email, String usertype, String masterAccountName, ArrayList<String> foodlist) {
+        Associate associateUser = new Associate(email, usertype, masterAccountName, foodlist);
+        String[] parts = email.split("@");
+        mDatabase.child("associate-account").child(parts[0]).setValue(associateUser);
     }
 
 }

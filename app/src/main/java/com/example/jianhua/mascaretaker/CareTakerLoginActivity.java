@@ -34,6 +34,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DatabaseError;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +47,47 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
+class Master {
+
+    public String username;
+    public String email;
+    public String usertype;
+    public ArrayList<String> associateAccountsName = new ArrayList<>();
+
+    public Master() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
+
+    public Master( String email, String usertype, ArrayList<String> associateAccountsName) {
+        this.email = email;
+        this.usertype = usertype;
+        this.associateAccountsName = associateAccountsName;
+
+    }
+
+}
+
+
+
+
 public class CareTakerLoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    //this is for user authorization
     private FirebaseAuth mAuth;
+    //this is the database to store user information
+    // each user have:
+    //1. user name  2. user email 3. user type: master or associate
+    //4. if the user if associate, it will have food item
+    private DatabaseReference mDatabase;
+
     private static final String TAG = "CareTakerLoginActivity";
+    private int userId = 0;
+
+
 
 
     // UI references.
@@ -65,6 +102,11 @@ public class CareTakerLoginActivity extends AppCompatActivity implements LoaderC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_care_taker_login);
         mAuth = FirebaseAuth.getInstance();
+        //set the database
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //test
+
+
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -150,7 +192,7 @@ public class CareTakerLoginActivity extends AppCompatActivity implements LoaderC
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin(boolean firstTimeLogin) {
+    public void attemptLogin(boolean firstTimeLogin) {
 
 
         // Reset errors.
@@ -158,7 +200,7 @@ public class CareTakerLoginActivity extends AppCompatActivity implements LoaderC
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
 
@@ -201,6 +243,11 @@ public class CareTakerLoginActivity extends AppCompatActivity implements LoaderC
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     //updateUI(user);
                                     Intent registerIntent = new Intent(CareTakerLoginActivity.this, CareTakerMainActivity.class);
+                                    //TODO : store into the database
+                                    //write master data to the database
+                                    writeMaster(email,"master", new ArrayList<String>());
+                                    //pass master user email to next activity
+                                    registerIntent.putExtra("masterAccount",email);
                                     startActivity(registerIntent);
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -221,6 +268,11 @@ public class CareTakerLoginActivity extends AppCompatActivity implements LoaderC
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Intent registerIntent = new Intent(CareTakerLoginActivity.this, CareTakerMainActivity.class);
+                                    //Todo: store into the database
+                                    //write master data to the database
+                                    writeMaster( email,"master", new ArrayList<String>());
+                                    //pass master user email to next activity
+                                    registerIntent.putExtra("masterAccount",email);
                                     startActivity(registerIntent);
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -337,6 +389,14 @@ public class CareTakerLoginActivity extends AppCompatActivity implements LoaderC
         int IS_PRIMARY = 1;
     }
 
+    //yuhao added
+
+    public void writeMaster(String email, String usertype, ArrayList<String> associateAccountsName) {
+        Master masterUser = new Master(email, usertype, associateAccountsName);
+        String[] parts = email.split("@");
+//String username, String email, String usertype, ArrayList<String> associateAccountsName
+        mDatabase.child("master-account").child(parts[0]).setValue(masterUser);
+    }
 
 }
 

@@ -27,8 +27,17 @@ public class CareTakerMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO
-                Intent careTakerAfterLoginIntent = new Intent(CareTakerMainActivity.this, CareTakerAfterLogin.class);
-                startActivity(careTakerAfterLoginIntent);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    String masteraccount = extras.getString("masterAccount");
+                    //The key argument here must match that used in the other activity
+                    Log.d("masterAccount-manage",masteraccount);
+                    Intent careTakerAfterLoginIntent = new Intent(CareTakerMainActivity.this, CareTakerAfterLogin.class);
+                    careTakerAfterLoginIntent.putExtra("masterAccount",masteraccount);
+                    startActivity(careTakerAfterLoginIntent);
+                }
+
+
                 //setContentView(R.layout.activity_care_taker_after_login);
             }
         });
@@ -37,8 +46,17 @@ public class CareTakerMainActivity extends AppCompatActivity {
         mCreateAssociateAcountButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent createAssociateIntent = new Intent(CareTakerMainActivity.this, CreateAssociateAccountActivity.class);
-                startActivity(createAssociateIntent);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    String masteraccount = extras.getString("masterAccount");
+                    Log.d("masterAccount-create",masteraccount);
+                    //The key argument here must match that used in the other activity
+                    Intent createAssociateIntent = new Intent(CareTakerMainActivity.this, CreateAssociateAccountActivity.class);
+                    createAssociateIntent.putExtra("masterAccount",masteraccount);
+                    startActivity(createAssociateIntent);
+                }
+
+
 
             }
         });
