@@ -52,6 +52,7 @@
             android:id="@+id/textEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:hint="@string/enter_food_here"
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>

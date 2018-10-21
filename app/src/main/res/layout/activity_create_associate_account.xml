@@ -8,11 +8,16 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginEnd="114dp"
         android:layout_marginStart="115dp"
         android:layout_marginTop="50dp"
+        android:fontFamily="monospace"
         android:text="Create Associate Acount"
+        android:textAlignment="center"
+        android:textColor="#1E27E1"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,15 +81,17 @@
         <!--</android.support.design.widget.TextInputLayout>-->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_height="match_parent">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/associate_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:hint="Email"
                 android:maxLines="1"
-                android:hint="Email" />
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -96,9 +103,10 @@
                 android:id="@+id/associate_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:hint="Password"
                 android:maxLines="1"
-                android:hint="Password" />
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -109,7 +117,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
+        android:padding="15dp"
+        android:background="@drawable/round_corner_bg1"
+        android:fontFamily="monospace"
         android:text="Create Associate Account"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
