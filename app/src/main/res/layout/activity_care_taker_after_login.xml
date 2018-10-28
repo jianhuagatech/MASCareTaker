@@ -44,6 +44,8 @@
         android:id="@+id/senior_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="2dp"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"

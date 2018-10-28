@@ -54,6 +54,7 @@ public class CareTakerAfterLogin extends AppCompatActivity {
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
+//                view.setBackgroundColor(Color.parseColor("white"));
                 TextView tView = (TextView) view.findViewById(android.R.id.text1);
                 tView.setTextColor(Color.parseColor("#FE5E08"));
                 tView.setTypeface(Typeface.MONOSPACE);
