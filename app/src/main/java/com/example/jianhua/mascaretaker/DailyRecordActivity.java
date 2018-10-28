@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +32,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
-import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -66,7 +63,7 @@ public class DailyRecordActivity extends ListActivity {
         // Set date label
         dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
         String dateLabel = getIntent().getExtras().getString("date");
-        TextView tv1 = (TextView)findViewById(R.id.textView);
+        TextView tv1 = (TextView)findViewById(R.id.date_text_view);
         tv1.setText(dateLabel);
 
         // Create a list data which will be displayed in inner ListView.

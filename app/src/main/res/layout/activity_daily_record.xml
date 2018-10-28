@@ -8,70 +8,71 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/date_text_view"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/october_15_2018"
+        android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@android:id/list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@android:id/list"
+
+    <ListView android:id="@android:id/list"
         android:layout_width="0dp"
-        android:layout_height="344dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="74dp"
-        app:layout_constraintBottom_toTopOf="@+id/addNewRecordButton"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
+        android:layout_width="107dp"
         android:layout_height="70dp"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginBottom="21dp"
-        app:layout_constraintBottom_toBottomOf="@+id/addNewRecordButton"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/addNewRecordButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@android:id/list">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/textEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fontFamily="monospace"
             android:hint="@string/enter_food_here"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="20sp"
+            tools:text="adasdadad" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/addNewRecordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/round_corner_bg1"
         android:fontFamily="monospace"
         android:onClick="onClickBtn"
+        android:padding="15dp"
         android:text="@string/add_new_record"
+        android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@android:id/list" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
