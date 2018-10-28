@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
+import android.text.method.ScrollingMovementMethod;
 
 
 /**
@@ -60,16 +61,19 @@ public class CareTakerAfterLogin extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
 
-                for(String associate_account : map.keySet()) {
+                //((TextView)findViewById(R.id.ass_account_name)).setText("Associate Account:");
+                int i = 0;
+                ((TextView)findViewById(R.id.ass_account_name)).setMovementMethod(new ScrollingMovementMethod());
 
-                    ((TextView)findViewById(R.id.ass_account_name)).setText(associate_account + "\n");
+
+
+                for(String associate_account : map.keySet()) {
+                    i++;
+
+                    ((TextView)findViewById(R.id.ass_account_name)).append(String.valueOf(i) + "." + associate_account + "\n");
 
 
                 }
-
-
-
-
 
                 Log.d("here====>",map.keySet().toString());
             }
