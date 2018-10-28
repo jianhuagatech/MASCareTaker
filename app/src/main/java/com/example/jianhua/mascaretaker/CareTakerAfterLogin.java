@@ -2,15 +2,23 @@ package com.example.jianhua.mascaretaker;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.List;
 import java.util.Map;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +53,8 @@ public class CareTakerAfterLogin extends AppCompatActivity {
 
     private static final String TAG = "CareTakerAfterLogin";
 
+    private ListView listView;
+    private ArrayList<String> seniorNameList = new ArrayList<>();
     private FirebaseAuth mAuth;
 
     @Override
@@ -54,28 +64,41 @@ public class CareTakerAfterLogin extends AppCompatActivity {
         //TODO show associate account
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        listView = (ListView) findViewById(R.id.senior_list_view);
+        final ArrayAdapter mAdapter = new ArrayAdapter<String>(this,
+                                                                android.R.layout.simple_list_item_1,
+                                                                seniorNameList) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView tView = (TextView) view.findViewById(android.R.id.text1);
+                tView.setTextColor(Color.parseColor("#FE5E08"));
+                tView.setTypeface(Typeface.MONOSPACE);
+                tView.setTextSize(24);
+                return view;
+            }
+        };
+
+        listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        goToSenior(position);
+                    }
+                }
+        );
+
         //get all assocaite account
         mDatabase.child("associate-account").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-
-                //((TextView)findViewById(R.id.ass_account_name)).setText("Associate Account:");
-                int i = 0;
-                ((TextView)findViewById(R.id.ass_account_name)).setMovementMethod(new ScrollingMovementMethod());
-
-
-
-                for(String associate_account : map.keySet()) {
-                    i++;
-
-                    ((TextView)findViewById(R.id.ass_account_name)).append(String.valueOf(i) + "." + associate_account + "\n");
-
-
-                }
-
-                Log.d("here====>",map.keySet().toString());
+                seniorNameList.addAll(map.keySet());
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -120,7 +143,9 @@ public class CareTakerAfterLogin extends AppCompatActivity {
 
     }
 
-
+    private void goToSenior(int index) {
+        System.out.print(index);
+    }
 
 }
 
