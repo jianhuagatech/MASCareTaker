@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DateOption">
+
+    <Button
+        android:id="@+id/today_button"
+        android:layout_width="226dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/round_corner_bg1"
+        android:fontFamily="monospace"
+        android:text="Today"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/week_button"
+        android:layout_width="226dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="272dp"
+        android:background="@drawable/round_corner_bg2"
+        android:fontFamily="monospace"
+        android:text="Last Week"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/month_button"
+        android:layout_width="226dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="336dp"
+        android:background="@drawable/round_corner_bg2"
+        android:fontFamily="monospace"
+        android:text="Last Month"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/year_button"
+        android:layout_width="226dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="400dp"
+        android:background="@drawable/round_corner_bg2"
+        android:fontFamily="monospace"
+        android:text="Last Year"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

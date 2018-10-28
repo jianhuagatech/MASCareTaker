@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,11 +33,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.TimeZone;
 
 // https://www.dev2qa.com/android-listactivity-example/
 public class DailyRecordActivity extends ListActivity {
@@ -46,12 +54,20 @@ public class DailyRecordActivity extends ListActivity {
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("foodUsers");
     String username = "";
     ArrayAdapter<String> listDataAdapter = null;
-    Map<String, Object> map = null;
+    Map<String, Food> map = new HashMap<>();
+    DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss-S");
+    Long last_calories = null; // need this to handle entering food, weird bug with timestamp change, cals null originally
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_record);
+
+        // Set date label
+        dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
+        String dateLabel = getIntent().getExtras().getString("date");
+        TextView tv1 = (TextView)findViewById(R.id.textView);
+        tv1.setText(dateLabel);
 
         // Create a list data which will be displayed in inner ListView.
 //        listData.add("Yogurt");
@@ -61,8 +77,9 @@ public class DailyRecordActivity extends ListActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         username = currentUser.getEmail().split("@")[0];
 
-        Food addedFood = new Food("Potato", 80);
-        writeFood(addedFood);
+        //FOR FRESH ACCOUNTS UNCOMMENT
+//        Food addedFood = new Food("Potato", 80);
+//        writeFood(addedFood);
 
         listDataAdapter = new ArrayAdapter<String>(this, R.layout.activity_daily_record_row, R.id.listRowTextView, listData);
         // Set this adapter to inner ListView object.
@@ -72,10 +89,31 @@ public class DailyRecordActivity extends ListActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                map = (Map<String, Object>) dataSnapshot.getValue();
                 listData.clear();
-                for(String foodQuery : new ArrayList<String>(map.keySet())) {
-                    listData.add(foodQuery);
+                LocalDate currTime = LocalDate.now();
+                for (DataSnapshot data: dataSnapshot.getChildren()) {
+                    String timestamp = data.getKey();
+                    String[] timestampArr = timestamp.split("-");
+                    String timestampDate = timestampArr[0] + timestampArr[1] + timestampArr[2];
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+                    LocalDate testDate = LocalDate.parse(timestampDate, formatter);
+
+                    if(currTime.isEqual(testDate)) {
+                        String query = (String) data.child("query").getValue();
+
+                        Long calorie_db = (Long) data.child("calories").getValue();
+                        if (calorie_db == null) {
+                            calorie_db = last_calories;
+                        }
+
+                        int calories = calorie_db.intValue();
+
+                        String label = timestampArr[3] + ":" + timestampArr[4] + "    " + query; // 5 spaces
+
+                        Food food = new Food(query, calories);
+                        map.put(label, food);
+                        listData.add(label);
+                    }
                 }
                 listDataAdapter.notifyDataSetChanged();
             }
@@ -88,8 +126,11 @@ public class DailyRecordActivity extends ListActivity {
     }
 
     public void writeFood(Food food) {
-        myRef.child(username).child(food.query).child("query").setValue(food.query);
-        myRef.child(username).child(food.query).child("calories").setValue(food.calories);
+        String timestamp = dateFormat.format(new Date());
+        myRef.child(username).child(timestamp).child("query").setValue(food.query);
+        myRef.child(username).child(timestamp).child("calories").setValue(food.calories);
+
+        last_calories = new Long(food.calories);
     }
 
     // When user click list item, this method will be invoked.
@@ -103,8 +144,8 @@ public class DailyRecordActivity extends ListActivity {
 
         // Create an AlertDialog to show.
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        String message = map.get(itemText).toString();
-        alertDialog.setMessage(message);
+        Food food = map.get(itemText);
+        alertDialog.setMessage(food.calories + " calories");
         alertDialog.show();
     }
 

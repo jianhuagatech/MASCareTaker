@@ -33,20 +33,16 @@
         <activity
             android:name=".CreateAssociateAccountActivity"
             android:label="Create Associate Account" />
-
         <activity
             android:name=".CareTakerAfterLogin"
-            android:label="CareTakerAfterLogin"/>
-
+            android:label="CareTakerAfterLogin" />
         <activity
             android:name=".ItemListActivity"
             android:label="@string/title_activity_item_list"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <activity android:name=".DailyRecordActivity"></activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DailyRecordActivity" />
+        <activity android:name=".DateOption" />
+        <activity android:name=".GraphActivity"></activity>
     </application>
 
 </manifest>
