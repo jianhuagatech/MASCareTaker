@@ -59,7 +59,18 @@ public class CareTakerAfterLogin extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                ((TextView)findViewById(R.id.ass_account_name)).setText(map.keySet().toString());
+
+                for(String associate_account : map.keySet()) {
+
+                    ((TextView)findViewById(R.id.ass_account_name)).setText(associate_account + "\n");
+
+
+                }
+
+
+
+
+
                 Log.d("here====>",map.keySet().toString());
             }
 
