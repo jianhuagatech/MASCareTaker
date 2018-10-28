@@ -43,6 +43,9 @@
         <activity android:name=".DailyRecordActivity" />
         <activity android:name=".DateOption" />
         <activity android:name=".GraphActivity"></activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true"/>
     </application>
 
 </manifest>
