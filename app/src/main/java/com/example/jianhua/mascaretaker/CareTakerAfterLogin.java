@@ -64,12 +64,25 @@ public class CareTakerAfterLogin extends AppCompatActivity {
         };
 
         listView.setAdapter(mAdapter);
-
+        //Todo click user to switch
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        goToSenior(position);
+
+                        String associateAccount = seniorNameList.get(position);
+
+                        Intent switchToDate = new Intent(CareTakerAfterLogin.this, DateOption.class);
+
+                        Bundle extras3 = new Bundle();
+                        extras3.putString("associateAccount", associateAccount);
+                        switchToDate.putExtras(extras3);
+
+                        Log.d("associateAccount: --> ", associateAccount);
+
+                        startActivity(switchToDate);
+
+
                     }
                 }
         );
@@ -95,8 +108,6 @@ public class CareTakerAfterLogin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO
-
-
                 Bundle extras = getIntent().getExtras();
                 if (extras != null) {
                     String masteraccount = extras.getString("masterAccount");
@@ -127,7 +138,7 @@ public class CareTakerAfterLogin extends AppCompatActivity {
     }
 
     private void goToSenior(int index) {
-        System.out.print(index);
+        System.out.println("HERE" + index);
     }
 
 }

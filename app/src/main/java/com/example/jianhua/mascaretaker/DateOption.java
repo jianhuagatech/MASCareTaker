@@ -37,12 +37,20 @@ public class DateOption extends AppCompatActivity {
     FirebaseUser currentUser = mAuth.getCurrentUser();
     String username = currentUser.getEmail().split("@")[0];
 
+
+
+
     HashMap<Date, Integer> map = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_option);
+
+        //get the name of associate account!
+        Intent intent = getIntent();
+        String Associate_Name = intent.getStringExtra("associateAccount");
+        System.out.println("Associate_Name:" + Associate_Name);
 
         dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
 
